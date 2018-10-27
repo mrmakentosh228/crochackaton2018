@@ -1,3 +1,9 @@
+#define pwm_a 9
+#define pwm_b 10
+#define control_a_1 2
+#define control_a_2 3
+#define control_b_1 4
+#define control_b_2 5
 #define d1 A0
 #define d2 A1
 #define d3 A2
@@ -53,22 +59,76 @@ void getVal(arr){
   }
 }
 
-void release() {
-  digitalWrite(control_1, LOW);
-  digitalWrite(control_2, LOW);
+void hold(bool motor) {
+  if (!motor) {
+    digitalWrite(control_a_1, LOW);
+    digitalWrite(control_a_2, LOW);
+  }
+  else {
+    digitalWrite(control_b_1, LOW);
+    digitalWrite(control_b_2, LOW);
+  }
 }
 
-void brake() {
-  digitalWrite(control_1, HIGH);
-  digitalWrite(control_2, HIGH);
+void brake(bool motor) {
+  if (!motor) {
+    digitalWrite(control_a_1, HIGH);
+    digitalWrite(control_a_2, HIGH);
+  }
+  else {
+    digitalWrite(control_b_1, HIGH);
+    digitalWrite(control_b_2, HIGH);
+  }
 }
 
-void forward() {
-  digitalWrite(control_1, HIGH);
-  digitalWrite(control_2, LOW);
+void forward(bool motor, byte sp) {
+  if (!motor) {
+    digitalWrite(control_a_1, HIGH);
+    digitalWrite(control_a_2, LOW);
+  }
+  else {
+    digitalWrite(control_b_1, HIGH);
+    digitalWrite(control_b_2, LOW);
+  }
 }
 
-void backrward() {
-  digitalWrite(control_1, LOW);
-  digitalWrite(control_2, HIGH);
+void backward(bool motor, byte sp) {
+  if (!motor) {
+    digitalWrite(control_a_1, LOW);
+    digitalWrite(control_a_2, HIGH);
+  }
+  else {
+    digitalWrite(control_b_1, LOW);
+    digitalWrite(control_b_2, HIGH);
+  }
+}
+
+void backwardAll(byte sp) {
+  backward(0, sp);
+  backward(1, sp);
+}
+
+void forwardAll(byte sp) {
+  forward(0, sp);
+  forward(1, sp);
+}
+
+void turnLeft(byte sp) {
+  forward(0, sp);
+  forward(1, 255);
+}
+
+void turnRight(byte sp) {
+  forward(0, 255);
+  forward(1, sp);
+}
+
+void brakeAll() {
+  brake(0);
+  brake(1);
+}
+
+void holdAll() {
+  hold(0);
+  hold(1);
 }
