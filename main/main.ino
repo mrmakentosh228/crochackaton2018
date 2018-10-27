@@ -22,11 +22,12 @@ void loop() {
    }
   else{
     if rl{
-      forward(0);
-      forward(1);
+      forward(0, 255);
+      forward(1, 255-32*w);
     }
     else{
-      
+      forward(1, 255);
+      forward(0, 255-32*w);
     }
   }
 }
