@@ -15,7 +15,7 @@ void loop() {
 
 }
 
-void release(bool motor) {
+void hold(bool motor) {
   if (!motor) {
     digitalWrite(control_a_1, LOW);
     digitalWrite(control_a_2, LOW);
@@ -37,7 +37,7 @@ void brake(bool motor) {
   }
 }
 
-void forward(bool motor) {
+void forward(bool motor, byte sp) {
   if (!motor) {
     digitalWrite(control_a_1, HIGH);
     digitalWrite(control_a_2, LOW);
@@ -48,7 +48,7 @@ void forward(bool motor) {
   }
 }
 
-void backrward(bool motor) {
+void backward(bool motor, byte sp) {
   if (!motor) {
     digitalWrite(control_a_1, LOW);
     digitalWrite(control_a_2, HIGH);
@@ -58,3 +58,34 @@ void backrward(bool motor) {
     digitalWrite(control_b_2, HIGH);
   }
 }
+
+void backwardAll(byte sp) {
+  backward(0, sp);
+  backward(1, sp);
+}
+
+void forwardAll(byte sp) {
+  forward(0, sp);
+  forward(1, sp);
+}
+
+void turnLeft(byte sp) {
+  forward(0, sp);
+  forward(1, 255);
+}
+
+void turnRight(byte sp) {
+  forward(0, 255);
+  forward(1, sp);
+}
+
+void brakeAll() {
+  brake(0);
+  brake(1);
+}
+
+void holdAll() {
+  hold(0);
+  hold(1);
+}
+
