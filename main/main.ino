@@ -16,6 +16,7 @@ int ds[8] = {d1, d2, d3, d4, d5, d6, d7, d8};
 byte w = 0;
 byte b = 0;
 bool rl;
+int val;
 
 void setup() {
   
@@ -27,7 +28,7 @@ void loop() {
     forwardAll(255);
    }
   else{
-    if rl{
+    if (rl){
       forward(0, 255);
       forward(1, 255-32*w);
     }
@@ -39,8 +40,8 @@ void loop() {
 }
 
 
-void getVal(arr){
-  for (byte i, i < 8, i++){
+void getVal(int arr[8]){
+  for (int i = 0; i < 8; i++){
     val = analogRead(arr[i]);
     if (val < 400){
       w++;
@@ -49,10 +50,10 @@ void getVal(arr){
       b++;
     if (i == 0){
       if (val < 400){
-        rl = True
+        rl = 1;
       }
       else{
-        rl = False
+        rl = 0;
       }
     }
     }
