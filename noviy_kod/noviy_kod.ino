@@ -1,4 +1,4 @@
-#define pwm_a 9
+#definew pwm_a 9
 #define pwm_b 10
 #define control_a_1 2
 #define control_a_2 3
@@ -12,7 +12,7 @@
 #define d6 A5
 #define d7 A6
 #define d8 A7
-const int w[8] = { -4, -3, -2, -1, 0, 1, 2, 3, 4};
+const int w[8] = { -4, -3, -2, -1, 1, 2, 3, 4};
 int val[8] = {d1, d2, d3, d4, d5, d6, d7, d8};
 static unsigned long t_prev;
 static float e_prev = 0.0;
@@ -36,21 +36,21 @@ void loop() {
   go(v_avg + reg, v_avg - reg);
 }
 void evaluate(){
-  for (byte i = 0; i < 8, i++) {
+  for (byte i = 0; i < 8; i++) {
     if (val[i] > 300) {
       sum += w[i];
       cnt++;
      }
   if (cnt > 0) {
     e = sum/(4 + cnt);
-    reg = cp * e + kd * (r - e_prev) / (millis() - t_prev);
+    reg = kp * e + kd * (e - e_prev) / (millis() - t_prev);
     e_prev = e;
   }
 }
 
 }
 
-void go(int v1, int v2){
+void go(byte v1, byte v2){
   digitalWrite(control_a_1, HIGH);
   digitalWrite(control_a_2, LOW);
   analogWrite(pwm_a, v1);
