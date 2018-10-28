@@ -43,15 +43,11 @@ void loop() {
   //Serial.print("Left: " + String(speed_left) + " Right: " + String(speed_right));
   // new string in serial port
   //Serial.println();
-  go(speed_left, speed_right);
+  go(speed_right, speed_left);
 }
 void evaluate() {
-    //t = millis();
-  // пока подсовываем своей массив для проверки
   for (byte i = 0; i < 8; i++) {
-    // uncomment the string under after debugging
     unsigned int sensor_data = analogRead(val[i]);
-    //Serial.println(sensor_data);
     if (sensor_data > 300) {
       sum += w[i];
       cnt++;
@@ -59,18 +55,17 @@ void evaluate() {
   }
   if (cnt > 0) {
     e = sum / (4 * cnt);
-    Serial.println(e);
-    // ниже предусмотрена защита от деления на 0!    
+    Serial.println(e);  
     if (t - t_prev > 0) {
       reg = kp * e + kd * (e - e_prev) / (t - t_prev);
     }
     else {
-      // деление на 1 сократил
       reg = kp * e + kd * (e - e_prev);
     }
     e_prev = e;
     t_prev = t;
     sum = 0.0;
+    cnt = 0;
   }
 }
 
